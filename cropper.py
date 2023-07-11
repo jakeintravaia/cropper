@@ -7,19 +7,19 @@ def crop_black_bars(image_path, output_dir):
     width, height = image.size
 
     # Get the RGB color values for black
-    black_color = (0, 0, 0)
+    black_color = (54, 54, 54)
 
     # Scan for horizontal black bars
     top_crop = 0
     bottom_crop = height - 1
     for y in range(height):
-        if all(image.getpixel((x, y)) == black_color for x in range(width)):
+        if all(image.getpixel((x, y)) <= black_color for x in range(width)):
             top_crop = y + 1
         else:
             break
 
     for y in range(height - 1, -1, -1):
-        if all(image.getpixel((x, y)) == black_color for x in range(width)):
+        if all(image.getpixel((x, y)) <= black_color for x in range(width)):
             bottom_crop = y
         else:
             break
@@ -28,13 +28,13 @@ def crop_black_bars(image_path, output_dir):
     left_crop = 0
     right_crop = width - 1
     for x in range(width):
-        if all(image.getpixel((x, y)) == black_color for y in range(height)):
+        if all(image.getpixel((x, y)) <= black_color for y in range(height)):
             left_crop = x + 1
         else:
             break
 
     for x in range(width - 1, -1, -1):
-        if all(image.getpixel((x, y)) == black_color for y in range(height)):
+        if all(image.getpixel((x, y)) <= black_color for y in range(height)):
             right_crop = x
         else:
             break
